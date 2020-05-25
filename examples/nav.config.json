@@ -28,12 +28,12 @@
               "title": "vue 组件数据定义"
             },
             {
-              "path": "/color",
-              "title": "Color 色彩"
+              "path": "/props",
+              "title": "组件 props"
             },
             {
-              "path": "/typography",
-              "title": "Typography 字体"
+              "path": "/component-style",
+              "title": "组件 style"
             },
             {
               "path": "/border",

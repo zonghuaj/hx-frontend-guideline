@@ -1,166 +1,120 @@
-## Button 按钮
-常用的操作按钮。
+## 组件事件命名
 
-### 基础用法
+Vue.js 提供的处理函数和表达式都是绑定在 ViewModel 上的，组件的每一个事件都应该按照一个好的命名规范来，这样可以避免不少的开发问题，具体可见如下 **为什么**。
 
-基础的按钮用法。
+### 为什么？
 
-:::demo 使用`type`、`plain`、`round`和`circle`属性来定义 Button 的样式。
+* 开发者可以随意给事件命名，即使是原生事件的名字，这样会带来迷惑性。
+* 过于宽松的事件命名可能与 [DOM 模板不兼容](https://vuejs.org/v2/guide/components.html#DOM-Template-Parsing-Caveats)。
 
-```html
-<el-row>
-  <el-button>默认按钮</el-button>
-  <el-button type="primary">主要按钮</el-button>
-  <el-button type="success">成功按钮</el-button>
-  <el-button type="info">信息按钮</el-button>
-  <el-button type="warning">警告按钮</el-button>
-  <el-button type="danger">危险按钮</el-button>
-</el-row>
+### 怎么做？
 
-<el-row>
-  <el-button plain>朴素按钮</el-button>
-  <el-button type="primary" plain>主要按钮</el-button>
-  <el-button type="success" plain>成功按钮</el-button>
-  <el-button type="info" plain>信息按钮</el-button>
-  <el-button type="warning" plain>警告按钮</el-button>
-  <el-button type="danger" plain>危险按钮</el-button>
-</el-row>
+* 事件名也使用连字符命名。
+* 一个事件的名字对应组件外的一组意义操作，如：upload-success、upload-error 以及 dropzone-upload-success、dropzone-upload-error （如果需要前缀的话）。
+* 事件命名应该以动词（如 client-api-load） 或是 名词（如 drive-upload-success）结尾。（[出处](https://github.com/GoogleWebComponents/style-guide#events)）
 
-<el-row>
-  <el-button round>圆角按钮</el-button>
-  <el-button type="primary" round>主要按钮</el-button>
-  <el-button type="success" round>成功按钮</el-button>
-  <el-button type="info" round>信息按钮</el-button>
-  <el-button type="warning" round>警告按钮</el-button>
-  <el-button type="danger" round>危险按钮</el-button>
-</el-row>
 
-<el-row>
-  <el-button icon="el-icon-search" circle></el-button>
-  <el-button type="primary" icon="el-icon-edit" circle></el-button>
-  <el-button type="success" icon="el-icon-check" circle></el-button>
-  <el-button type="info" icon="el-icon-message" circle></el-button>
-  <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-  <el-button type="danger" icon="el-icon-delete" circle></el-button>
-</el-row>
-```
-:::
 
-### 禁用状态
+## 避免 this.$parent
 
-按钮不可用状态。
+Vue.js 支持组件嵌套，并且子组件可访问父组件的上下文。访问组件之外的上下文违反了[基于模块开发](#基于模块开发)的[第一原则](https://addyosmani.com/first/)。因此你应该尽量避免使用 **`this.$parent`**。
 
-:::demo 你可以使用`disabled`属性来定义按钮是否可用，它接受一个`Boolean`值。
+### 为什么？
 
-```html
-<el-row>
-  <el-button disabled>默认按钮</el-button>
-  <el-button type="primary" disabled>主要按钮</el-button>
-  <el-button type="success" disabled>成功按钮</el-button>
-  <el-button type="info" disabled>信息按钮</el-button>
-  <el-button type="warning" disabled>警告按钮</el-button>
-  <el-button type="danger" disabled>危险按钮</el-button>
-</el-row>
+* 组件必须相互保持独立，Vue 组件也是。如果组件需要访问其父层的上下文就违反了该原则。
+* 如果一个组件需要访问其父组件的上下文，那么该组件将不能在其它上下文中复用。
 
-<el-row>
-  <el-button plain disabled>朴素按钮</el-button>
-  <el-button type="primary" plain disabled>主要按钮</el-button>
-  <el-button type="success" plain disabled>成功按钮</el-button>
-  <el-button type="info" plain disabled>信息按钮</el-button>
-  <el-button type="warning" plain disabled>警告按钮</el-button>
-  <el-button type="danger" plain disabled>危险按钮</el-button>
-</el-row>
-```
-:::
+### 怎么做？
 
-### 文字按钮
+* 通过 props 将值传递给子组件。
+* 通过 props 传递回调函数给子组件来达到调用父组件方法的目的。
+* 通过在子组件触发事件来通知父组件。
 
-没有边框和背景色的按钮。
 
-:::demo
-```html
-<el-button type="text">文字按钮</el-button>
-<el-button type="text" disabled>文字按钮</el-button>
-```
-:::
+## 谨慎使用 this.$refs
 
-### 图标按钮
+Vue.js 支持通过 `ref` 属性来访问其它组件和 HTML 元素。并通过 `this.$refs` 可以得到组件或 HTML 元素的上下文。在大多数情况下，通过 `this.$refs`来访问其它组件的上下文是可以避免的。在使用的的时候你需要注意避免调用了不恰当的组件 API，所以应该尽量避免使用 `this.$refs`。
 
-带图标的按钮可增强辨识度（有文字）或节省空间（无文字）。
+### 为什么？
 
-:::demo 设置`icon`属性即可，icon 的列表可以参考 Element 的 icon 组件，也可以设置在文字右边的 icon ，只要使用`i`标签即可，可以使用自定义图标。
+* 组件必须是保持独立的，如果一个组件的 API 不能够提供所需的功能，那么这个组件在设计、实现上是有问题的。
+* 组件的属性和事件必须足够的给大多数的组件使用。
+
+### 怎么做？
+
+* 提供良好的组件 API。
+* 总是关注于组件本身的目的。
+* 拒绝定制代码。如果你在一个通用的组件内部编写特定需求的代码，那么代表这个组件的 API 不够通用，或者你可能需要一个新的组件来应对该需求。
+* 检查所有的 props 是否有缺失的，如果有提一个 issue 或是完善这个组件。
+* 检查所有的事件。子组件向父组件通信一般是通过事件来实现的，但是大多数的开发者更多的关注于 props 从忽视了这点。
+* **Props向下传递，事件向上传递！**。以此为目标升级你的组件，提供良好的 API 和 独立性。
+* 当遇到 props 和 events 难以实现的功能时，通过 `this.$refs`来实现。
+* 当需要操作 DOM 无法通过指令来做的时候可使用 `this.$ref` 而不是 `JQuery`、`document.getElement*`、`document.queryElement`。
+
 
 ```html
-<el-button type="primary" icon="el-icon-edit"></el-button>
-<el-button type="primary" icon="el-icon-share"></el-button>
-<el-button type="primary" icon="el-icon-delete"></el-button>
-<el-button type="primary" icon="el-icon-search">搜索</el-button>
-<el-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+<!-- 推荐，并未使用 this.$refs -->
+<range :max="max"
+  :min="min"
+  @current-value="currentValue"
+  :step="1"></range>
 ```
-:::
-
-### 按钮组
-
-以按钮组的方式出现，常用于多项类似操作。
-
-:::demo 使用`<el-button-group>`标签来嵌套你的按钮。
 
 ```html
-<el-button-group>
-  <el-button type="primary" icon="el-icon-arrow-left">上一页</el-button>
-  <el-button type="primary">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-</el-button-group>
-<el-button-group>
-  <el-button type="primary" icon="el-icon-edit"></el-button>
-  <el-button type="primary" icon="el-icon-share"></el-button>
-  <el-button type="primary" icon="el-icon-delete"></el-button>
-</el-button-group>
+<!-- 使用 this.$refs 的适用情况-->
+<modal ref="basicModal">
+  <h4>Basic Modal</h4>
+  <button class="primary" @click="$refs.basicModal.hide()">Close</button>
+</modal>
+<button @click="$refs.basicModal.open()">Open modal</button>
+
+<!-- Modal component -->
+<template>
+  <div v-show="active">
+    <!-- ... -->
+  </div>
+</template>
+
+<script>
+  export default {
+    // ...
+    data() {
+      return {
+        active: false,
+      };
+    },
+    methods: {
+      open() {
+        this.active = true;
+      },
+      hide() {
+        this.active = false;
+      },
+    },
+    // ...
+  };
+</script>
+
 ```
-:::
-
-### 加载中
-
-点击按钮后进行数据加载操作，在按钮上显示加载状态。
-
-:::demo 要设置为 loading 状态，只要设置`loading`属性为`true`即可。
 
 ```html
-<el-button type="primary" :loading="true">加载中</el-button>
+<!-- 如果可通过 emited 来做则避免通过 this.$refs 直接访问 -->
+<template>
+  <range :max="max"
+    :min="min"
+    ref="range"
+    :step="1"></range>
+</template>
+
+<script>
+  export default {
+    // ...
+    methods: {
+      getRangeCurrentValue() {
+        return this.$refs.range.currentValue;
+      },
+    },
+    // ...
+  };
+</script>
 ```
-:::
-
-### 不同尺寸
-
-Button 组件提供除了默认值以外的三种尺寸，可以在不同场景下选择合适的按钮尺寸。
-
-:::demo 额外的尺寸：`medium`、`small`、`mini`，通过设置`size`属性来配置它们。
-
-```html
-<el-row>
-  <el-button>默认按钮</el-button>
-  <el-button size="medium">中等按钮</el-button>
-  <el-button size="small">小型按钮</el-button>
-  <el-button size="mini">超小按钮</el-button>
-</el-row>
-<el-row>
-  <el-button round>默认按钮</el-button>
-  <el-button size="medium" round>中等按钮</el-button>
-  <el-button size="small" round>小型按钮</el-button>
-  <el-button size="mini" round>超小按钮</el-button>
-</el-row>
-```
-:::
-
-### Attributes
-| 参数      | 说明    | 类型      | 可选值       | 默认值   |
-|---------- |-------- |---------- |-------------  |-------- |
-| size     | 尺寸   | string  |   medium / small / mini            |    —     |
-| type     | 类型   | string    |   primary / success / warning / danger / info / text |     —    |
-| plain     | 是否朴素按钮   | boolean    | — | false   |
-| round     | 是否圆角按钮   | boolean    | — | false   |
-| circle     | 是否圆形按钮   | boolean    | — | false   |
-| loading     | 是否加载中状态   | boolean    | — | false   |
-| disabled  | 是否禁用状态    | boolean   | —   | false   |
-| icon  | 图标类名 | string   |  —  |  —  |
-| autofocus  | 是否默认聚焦 | boolean   |  —  |  false  |
-| native-type | 原生 type 属性 | string | button / submit / reset | button |

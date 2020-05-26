@@ -44,8 +44,12 @@
               "title": "事件定义与使用"
             },
             {
-              "path": "/link",
-              "title": "Link 文字链接"
+              "path": "/component-doc",
+              "title": "提供组件 API文档"
+            },
+            {
+              "path": "/component-vfor",
+              "title": "v-if/v-for"
             }
           ]
         },

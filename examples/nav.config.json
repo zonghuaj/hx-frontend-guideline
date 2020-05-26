@@ -48,8 +48,12 @@
               "title": "提供组件 API文档"
             },
             {
-              "path": "/component-vfor",
+              "path": "/radio",
               "title": "v-if/v-for"
+            },
+            {
+              "path": "/checkbox",
+              "title": "隐性的父子组件通信"
             }
           ]
         },

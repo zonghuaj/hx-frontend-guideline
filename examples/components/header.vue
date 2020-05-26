@@ -273,8 +273,8 @@
           <!-- logo -->
           <slot>
             <img
-              src="../assets/images/element-logo.svg"
-              alt="element-logo"
+              src="../assets/images/left-logo.png"
+              alt="element-logo" style="width:70px;height:70px;margin-top: 5px;"
               class="nav-logo">
             <img
               src="../assets/images/element-logo-small.svg"

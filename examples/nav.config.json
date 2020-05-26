@@ -24,28 +24,24 @@
               "title": "vue 组件命名"
             },
             {
-              "path": "/define-component-data",
-              "title": "vue 组件数据定义"
-            },
-            {
               "path": "/props",
               "title": "组件 props"
+            },
+            {
+              "path": "/define-component-data",
+              "title": "vue 组件数据定义"
             },
             {
               "path": "/component-style",
               "title": "组件 style"
             },
             {
-              "path": "/border",
-              "title": "Border 边框"
+              "path": "/component-structure",
+              "title": "结构化"
             },
             {
-              "path": "/icon",
-              "title": "Icon 图标"
-            },
-            {
-              "path": "/button",
-              "title": "Button 按钮"
+              "path": "/event-use",
+              "title": "事件定义与使用"
             },
             {
               "path": "/link",

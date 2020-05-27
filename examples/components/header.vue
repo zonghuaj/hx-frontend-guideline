@@ -301,7 +301,7 @@
               :to="`/${ lang }/component`">{{ langConfig.components }}
             </router-link>
           </li>
-          <li 
+          <li style="display: none;"
             class="nav-item nav-item-theme"
           >
             <router-link
@@ -309,7 +309,7 @@
               :to="`/${ lang }/theme`">{{ langConfig.theme }}
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" style="display: none;">
             <router-link
               active-class="active"
               :to="`/${ lang }/resource`"
@@ -347,7 +347,7 @@
           </li>
 
           <!-- 语言选择器 -->
-          <li class="nav-item lang-item">
+          <li class="nav-item lang-item"  style="display:none;">
             <el-dropdown
               trigger="click"
               class="nav-dropdown nav-lang"

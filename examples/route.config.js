@@ -1,4 +1,5 @@
 import navConfig from './nav.config';
+import navUIConfig from './nav.config.ui.json';
 import langs from './i18n/route';
 
 const LOAD_MAP = {
@@ -104,6 +105,59 @@ const registerRoute = (navConfig) => {
 };
 
 let route = registerRoute(navConfig);
+
+// ui
+const registerUIRoute = (navConfig) => {
+  let route = [];
+  Object.keys(navConfig).forEach((lang, index) => {
+    let navs = navConfig[lang];
+    route.push({
+      path: `/${ lang }/component`,
+      redirect: `/${ lang }/component/installation`,
+      component: load(lang, 'component'),
+      children: []
+    });
+    navs.forEach(nav => {
+      if (nav.href) return;
+      if (nav.groups) {
+        nav.groups.forEach(group => {
+          group.list.forEach(nav => {
+            addRoute(nav, lang, index);
+          });
+        });
+      } else if (nav.children) {
+        nav.children.forEach(nav => {
+          addRoute(nav, lang, index);
+        });
+      } else {
+        addRoute(nav, lang, index);
+      }
+    });
+  });
+  function addRoute(page, lang, index) {
+    const component = page.path === '/changelog'
+      ? load(lang, 'changelog')
+      : loadDocs(lang, page.path);
+    let child = {
+      path: page.path.slice(1),
+      meta: {
+        title: page.title || page.name,
+        description: page.description,
+        lang
+      },
+      name: 'component-' + lang + (page.title || page.name),
+      component: component.default || component
+    };
+
+    route[index].children.push(child);
+  }
+
+  return route;
+};
+
+let uiroute = registerUIRoute(navUIConfig);
+
+route = route.concat(uiroute);
 
 const generateMiscRoutes = function(lang) {
   let guideRoute = {

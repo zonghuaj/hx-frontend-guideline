@@ -1,55 +1,22 @@
 {
   "zh-CN": [
     {
-      "name": "开发指南",
-      "children": [
-        {
-          "path": "/installation",
-          "name": "安装"
-        }
-      ]
-    },
-    {
-      "name": "规范",
+      "name": "UI 设计规范",
       "groups": [
         {
-          "groupName": "Basic",
+          "groupName": "全局样式",
           "list": [
             {
-              "path": "/target",
+              "path": "/color-ui",
               "title": "目标"
             },
             {
-              "path": "/define-component",
+              "path": "/layout-ui",
               "title": "vue 组件命名"
             },
             {
-              "path": "/container",
+              "path": "/font-ui",
               "title": "Container 布局容器"
-            },
-            {
-              "path": "/color",
-              "title": "Color 色彩"
-            },
-            {
-              "path": "/typography",
-              "title": "Typography 字体"
-            },
-            {
-              "path": "/border",
-              "title": "Border 边框"
-            },
-            {
-              "path": "/icon",
-              "title": "Icon 图标"
-            },
-            {
-              "path": "/button",
-              "title": "Button 按钮"
-            },
-            {
-              "path": "/link",
-              "title": "Link 文字链接"
             }
           ]
         },

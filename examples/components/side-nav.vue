@@ -123,7 +123,7 @@
     :style="navStyle">
     <ul>
       <li style="display:none;" class="nav-item sponsors">
-        <a>{{ lang === 'zh-CN' ? '赞助商' : 'Sponsors' }}</a>
+        <a>{{ lang === 'zh-CN' ? '赞助商' : 'Sponsors' }}ss</a>
         <ul class="pure-menu-list sub-nav">
           <li class="nav-item" v-show="lang !== 'zh-CN'">
             <a href="https://tipe.io/?ref=element" target="_blank">

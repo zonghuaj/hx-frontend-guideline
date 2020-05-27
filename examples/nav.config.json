@@ -10,7 +10,7 @@
       ]
     },
     {
-      "name": "规范",
+      "name": "代码开发规范",
       "groups": [
         {
           "groupName": "Basic",
@@ -54,6 +54,28 @@
             {
               "path": "/checkbox",
               "title": "隐性的父子组件通信"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UI 设计规范",
+      "groups": [
+        {
+          "groupName": "全局样式",
+          "list": [
+            {
+              "path": "/layout-ui",
+              "title": "布局"
+            },
+            {
+              "path": "/layout-ui",
+              "title": "vue 组件命名"
+            },
+            {
+              "path": "/font-ui",
+              "title": "Container 布局容器"
             }
           ]
         },
@@ -276,5 +298,6 @@
         }
       ]
     }
+    
   ]
 }

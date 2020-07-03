@@ -88,6 +88,20 @@
           ]
         }
       ]
+    },
+    {
+      "name": "代码注释规范",
+      "groups": [
+        {
+          "groupName": "规范",
+          "list": [
+            {
+              "path": "/stardard",
+              "title": "注释"
+            }
+          ]
+        }
+      ]
     }
     
   ]

@@ -1,5 +1,4 @@
 import navConfig from './nav.config';
-import navUIConfig from './nav.config.ui.json';
 import langs from './i18n/route';
 
 const LOAD_MAP = {
@@ -7,21 +6,6 @@ const LOAD_MAP = {
     return r => require.ensure([], () =>
       r(require(`./pages/zh-CN/${name}.vue`)),
     'zh-CN');
-  },
-  'en-US': name => {
-    return r => require.ensure([], () =>
-      r(require(`./pages/en-US/${name}.vue`)),
-    'en-US');
-  },
-  'es': name => {
-    return r => require.ensure([], () =>
-      r(require(`./pages/es/${name}.vue`)),
-    'es');
-  },
-  'fr-FR': name => {
-    return r => require.ensure([], () =>
-      r(require(`./pages/fr-FR/${name}.vue`)),
-    'fr-FR');
   }
 };
 
@@ -34,21 +18,6 @@ const LOAD_DOCS_MAP = {
     return r => require.ensure([], () =>
       r(require(`./docs/zh-CN${path}.md`)),
     'zh-CN');
-  },
-  'en-US': path => {
-    return r => require.ensure([], () =>
-      r(require(`./docs/en-US${path}.md`)),
-    'en-US');
-  },
-  'es': path => {
-    return r => require.ensure([], () =>
-      r(require(`./docs/es${path}.md`)),
-    'es');
-  },
-  'fr-FR': path => {
-    return r => require.ensure([], () =>
-      r(require(`./docs/fr-FR${path}.md`)),
-    'fr-FR');
   }
 };
 
@@ -106,59 +75,6 @@ const registerRoute = (navConfig) => {
 
 let route = registerRoute(navConfig);
 
-// ui
-const registerUIRoute = (navConfig) => {
-  let route = [];
-  Object.keys(navConfig).forEach((lang, index) => {
-    let navs = navConfig[lang];
-    route.push({
-      path: `/${ lang }/component`,
-      redirect: `/${ lang }/component/installation`,
-      component: load(lang, 'component'),
-      children: []
-    });
-    navs.forEach(nav => {
-      if (nav.href) return;
-      if (nav.groups) {
-        nav.groups.forEach(group => {
-          group.list.forEach(nav => {
-            addRoute(nav, lang, index);
-          });
-        });
-      } else if (nav.children) {
-        nav.children.forEach(nav => {
-          addRoute(nav, lang, index);
-        });
-      } else {
-        addRoute(nav, lang, index);
-      }
-    });
-  });
-  function addRoute(page, lang, index) {
-    const component = page.path === '/changelog'
-      ? load(lang, 'changelog')
-      : loadDocs(lang, page.path);
-    let child = {
-      path: page.path.slice(1),
-      meta: {
-        title: page.title || page.name,
-        description: page.description,
-        lang
-      },
-      name: 'component-' + lang + (page.title || page.name),
-      component: component.default || component
-    };
-
-    route[index].children.push(child);
-  }
-
-  return route;
-};
-
-let uiroute = registerUIRoute(navUIConfig);
-
-route = route.concat(uiroute);
-
 const generateMiscRoutes = function(lang) {
   let guideRoute = {
     path: `/${ lang }/guide`, // 指南
@@ -174,42 +90,15 @@ const generateMiscRoutes = function(lang) {
       name: 'guide-nav' + lang,
       meta: { lang },
       component: load(lang, 'nav')
+    }, {
+      path: 'wechat-android-debug', // 安卓调试(微信)
+      name: 'wechat-android-debug' + lang,
+      meta: { lang },
+      component: load(lang, 'wechat-android-debug')
     }]
   };
 
-  let themeRoute = {
-    path: `/${ lang }/theme`,
-    component: load(lang, 'theme-nav'),
-    children: [
-      {
-        path: '/', // 主题管理
-        name: 'theme' + lang,
-        meta: { lang },
-        component: load(lang, 'theme')
-      },
-      {
-        path: 'preview', // 主题预览编辑
-        name: 'theme-preview-' + lang,
-        meta: { lang },
-        component: load(lang, 'theme-preview')
-      }]
-  };
-
-  let resourceRoute = {
-    path: `/${ lang }/resource`, // 资源
-    meta: { lang },
-    name: 'resource' + lang,
-    component: load(lang, 'resource')
-  };
-
-  let indexRoute = {
-    path: `/${ lang }`, // 首页
-    meta: { lang },
-    name: 'home' + lang,
-    component: load(lang, 'index')
-  };
-
-  return [guideRoute, resourceRoute, themeRoute, indexRoute];
+  return [guideRoute];
 };
 
 langs.forEach(lang => {

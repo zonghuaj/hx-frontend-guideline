@@ -289,12 +289,12 @@
           <!--li class="nav-item nav-algolia-search" v-show="isComponentPage" style="display:none;">
             <algolia-search></algolia-search>
           </li-->
-          <!--li class="nav-item">
+          <li class="nav-item">
             <router-link
               active-class="active"
               :to="`/${ lang }/guide`">{{ langConfig.guide }}
             </router-link>
-          </li-->
+          </li>
           <li class="nav-item">
             <router-link
               active-class="active"

@@ -83,6 +83,14 @@
           {
             path: '/nav',
             name: '<%= 2 >'
+          },
+          {
+            path: '/wechat-android-debug',
+            name: '安卓调试(微信)'
+          },
+          {
+            path: '/wechat-ios-debug',
+            name: '苹果调试(微信)'
           }
         ]
       };

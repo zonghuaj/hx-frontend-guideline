@@ -95,6 +95,11 @@ const generateMiscRoutes = function(lang) {
       name: 'wechat-android-debug' + lang,
       meta: { lang },
       component: load(lang, 'wechat-android-debug')
+    }, {
+      path: 'wechat-ios-debug', // 苹果调试(微信)
+      name: 'wechat-ios-debug' + lang,
+      meta: { lang },
+      component: load(lang, 'wechat-ios-debug')
     }]
   };
 

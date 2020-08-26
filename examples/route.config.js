@@ -1,4 +1,5 @@
 import navConfig from './nav.config';
+import navCordovaConfig from './nav.cordova.config';
 import langs from './i18n/route';
 
 const LOAD_MAP = {
@@ -21,6 +22,7 @@ const LOAD_DOCS_MAP = {
   }
 };
 
+/** stardard start */
 const loadDocs = function(lang, path) {
   return LOAD_DOCS_MAP[lang](path);
 };
@@ -74,6 +76,59 @@ const registerRoute = (navConfig) => {
 };
 
 let route = registerRoute(navConfig);
+/** stardard end */
+
+/** cordova start */
+const registerCordovaRoute = (navCordovaConfig) => {
+  let route = [];
+  Object.keys(navCordovaConfig).forEach((lang, index) => {
+    let navs = navCordovaConfig[lang];
+    route.push({
+      path: `/${ lang }/cordova`,
+      redirect: `/${ lang }/cordova/jdkinstallation`,
+      component: load(lang, 'cordova'),
+      children: []
+    });
+    navs.forEach(nav => {
+      if (nav.href) return;
+      if (nav.groups) {
+        nav.groups.forEach(group => {
+          group.list.forEach(nav => {
+            addRoute(nav, lang, index);
+          });
+        });
+      } else if (nav.children) {
+        nav.children.forEach(nav => {
+          addRoute(nav, lang, index);
+        });
+      } else {
+        addRoute(nav, lang, index);
+      }
+    });
+  });
+  function addRoute(page, lang, index) {
+    const component = page.path === '/changelog'
+      ? load(lang, 'changelog')
+      : loadDocs(lang, page.path);
+    let child = {
+      path: page.path.slice(1),
+      meta: {
+        title: page.title || page.name,
+        description: page.description,
+        lang
+      },
+      name: 'component-' + lang + (page.title || page.name),
+      component: component.default || component
+    };
+
+    route[index].children.push(child);
+  }
+
+  return route;
+};
+
+route = route.concat(registerCordovaRoute(navCordovaConfig));
+/** cordova end */
 
 const generateMiscRoutes = function(lang) {
   let guideRoute = {

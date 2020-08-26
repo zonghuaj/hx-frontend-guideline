@@ -1,0 +1,13 @@
+{
+  "zh-CN": [
+    {
+      "name": "本地安装",
+      "children": [
+        {
+          "path": "/jdkinstallation",
+          "name": "JDK 安装"
+        }
+      ]
+    }
+  ]
+}

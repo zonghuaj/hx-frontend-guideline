@@ -301,6 +301,12 @@
               :to="`/${ lang }/component`">{{ langConfig.components }}
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link
+              active-class="active"
+              :to="`/${ lang }/cordova`">{{ langConfig.cordova }}
+            </router-link>
+          </li>
           <li style="display: none;"
             class="nav-item nav-item-theme"
           >

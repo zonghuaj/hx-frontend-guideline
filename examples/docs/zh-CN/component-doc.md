@@ -17,7 +17,8 @@
 range-slider/
 ├── range-slider.vue
 ├── range-slider.less
-└── README.md
+└──
+ README.md
 ```
 
 在 README 文件中说明模块的功能以及使用场景。对于 vue 组件来说，比较有用的描述是组件的自定义属性即 API 的描述介绍。
